@@ -16,10 +16,10 @@
     "noImplicitAny": true,
     "noImplicitThis": true,
     "alwaysStrict": true,
-    "strictNullChecks": false /* want to ignore in tests */,
+    "strictNullChecks": true /* want to ignore in tests */,
     "strictBindCallApply": true,
-    "strictFunctionTypes": false,
-    "strictPropertyInitialization": false /* typeorm makes this difficult */
+    "strictFunctionTypes": true,
+    "strictPropertyInitialization": true
   },
   "exclude": ["node_modules"]
 }
