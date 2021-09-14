@@ -6,9 +6,13 @@ const EVENTS_MAP: { [key: string]: any } = {};
 
 const app = express();
 const PORT = 8080;
-const file = JSON.parse(readFileSync("./data/events.json", "utf8"));
-console.log(EVENTS_MAP);
-EVENTS_MAP[file[0].event.id] = file[0].event;
+
+const buildCache = () => {
+  const events = JSON.parse(readFileSync("./data/events.json", "utf8"));
+  events.forEach((e: any) => {
+    EVENTS_MAP[e.event.id] = e.event;
+  });
+};
 
 app.use(express.urlencoded({ extended: false }));
 
@@ -18,18 +22,18 @@ app.get("/", (req, res) => {
   res.send("Hello world");
 });
 
-app.get("/event/:id", (req, res) => {
+app.get("/events/:id", (req, res) => {
   res.send(EVENTS_MAP[req.params["id"]]);
 });
 
-app.get("/event/:id/game/:game_id", (req, res) => {
+app.get("/events/:id/game/:game_id", (req, res) => {
   const id = req.params["id"];
   const game = req.params["game_id"];
   EVENTS_MAP[id].games.find((g: any) => g.id === game);
   res.send(EVENTS_MAP[id].games.find((g: any) => g.id === game));
 });
 
-app.get("/event/:id/games", (req, res) => {
+app.get("/events/:id/games", (req, res) => {
   const id = req.params["id"];
   const search = req.query["name"] as string;
   const sort = req.query["sort"] as string;
@@ -53,5 +57,7 @@ app.get("/event/:id/games", (req, res) => {
 });
 
 app.listen(PORT, () => {
+  console.log("building cache");
+  buildCache();
   console.log(`Express with Typescript! http://localhost:${PORT}`);
 });
