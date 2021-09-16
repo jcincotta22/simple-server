@@ -1,5 +1,5 @@
 import express from "express";
-import { readFileSync } from "fs";
+import fs from "fs";
 import cors from "cors";
 
 const app = express();
