@@ -10,7 +10,7 @@ const PORT = 8080;
 const buildCache = () => {
   const events = JSON.parse(readFileSync("./data/events.json", "utf8"));
   events.forEach((e: any) => {
-    EVENTS_MAP[e.event.id] = e.event;
+    EVENTS_MAP[e.id] = e;
   });
 };
 
